@@ -1,25 +1,33 @@
-import React from 'react';
-import images from './avengers.png';
-import './App.css';
+import React, { Suspense } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { CircularProgress } from '@material-ui/core';
+import Router from './Router';
+import GlobalStyle from './GlobalStyle';
+import GlobalContextProvider from './hooks/useGlobal';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={images} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalContextProvider>
+      <GlobalStyle />
+      <Suspense
+        fallback={(
+          <div className="spinner-container">
+            <CircularProgress color="primary" />
+          </div>
+        )}
+      >
+        <Router />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          closeOnClick
+          draggable
+          pauseOnFocusLoss={false}
+          pauseOnHover={false}
+        />
+      </Suspense>
+    </GlobalContextProvider>
   );
 }
 
