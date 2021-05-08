@@ -8,7 +8,7 @@ export const LoginContainer = styled.div`
   width: 100vw;
   align-items: center;
   justify-content: center;
-  
+
   img {
     width: 150px;
     height: 150px;

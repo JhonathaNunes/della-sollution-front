@@ -15,15 +15,17 @@ import { addData } from '../../services/LocalStorageService';
 import User from '../../contracts/models/User';
 import logo from '../../assets/images/logo.png';
 
-type LoginForm = {
+interface LoginForm {
   username: string;
   password: string;
-};
+}
 
 const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
-    register, handleSubmit, formState: { errors },
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm<LoginForm>();
   const { setUser } = useGlobal();
   const history = useHistory();
@@ -66,11 +68,9 @@ const Login: React.FC = () => {
           fullWidth
           error={errors.username !== undefined}
           helperText={errors.username && errors.username?.message}
-          {...register(
-            'username', {
-              required: 'Campo obrigatório',
-            },
-          )}
+          {...register('username', {
+            required: 'Campo obrigatório',
+          })}
         />
         <StyledInput
           label="Senha"
@@ -79,11 +79,9 @@ const Login: React.FC = () => {
           fullWidth
           error={errors.password !== undefined}
           helperText={errors.password && errors.password?.message}
-          {...register(
-            'password', {
-              required: 'Campo obrigatório',
-            },
-          )}
+          {...register('password', {
+            required: 'Campo obrigatório',
+          })}
         />
         <ButtonContainer>
           <Button

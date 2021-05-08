@@ -11,8 +11,9 @@ const StyledButton = styled.button<ButtonProps>`
   font-weight: lighter;
   font-size: 14px;
   color: #ffffff;
-  background-color: ${(props) => (
-    props.color === 'primary' ? '#1976D2' : '#9A0036')};
+  background-color: ${
+  (props) => (props.color === 'primary' ? '#1976D2' : '#9A0036')
+};
   border: none;
   text-transform: uppercase;
   border-radius: 5px;
