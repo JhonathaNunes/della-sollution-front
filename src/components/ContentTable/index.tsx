@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Paper,
   Table,
   TableBody,
   TableContainer,
@@ -21,26 +20,24 @@ interface TableProps {
 }
 
 const ContentTable: React.FC<TableProps> = ({ columns, children }) => (
-  <Paper style={{ width: '100%' }}>
-    <TableContainer style={{ maxHeight: 500, position: 'relative' }}>
-      <Table stickyHeader>
-        <TableHead>
-          <TableRow>
-            {columns.map((col) => (
-              <StyledHeader
-                key={col.id}
-                align={col.align}
-                style={{ minWidth: col.minWidth }}
-              >
-                {col.label}
-              </StyledHeader>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>{children}</TableBody>
-      </Table>
-    </TableContainer>
-  </Paper>
+  <TableContainer style={{ height: '100%' }}>
+    <Table stickyHeader>
+      <TableHead>
+        <TableRow>
+          {columns.map((col) => (
+            <StyledHeader
+              key={col.id}
+              align={col.align}
+              style={{ minWidth: col.minWidth }}
+            >
+              {col.label}
+            </StyledHeader>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>{children}</TableBody>
+    </Table>
+  </TableContainer>
 );
 
 export default ContentTable;

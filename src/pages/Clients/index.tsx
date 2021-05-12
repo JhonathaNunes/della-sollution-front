@@ -6,7 +6,8 @@ import MainNavBar from '../../components/MainNavBar';
 import Client from '../../contracts/models/Client';
 import Order from '../../contracts/models/Order';
 import ClientsContainer from '../../containers/ClientsContainer';
-import { ClientHolder, ClientHeader, ClientBody } from './style';
+import { ClientHolder, ClientBody } from './style';
+import Header from '../../components/Header';
 
 const Clients: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -40,7 +41,7 @@ const Clients: React.FC = () => {
     <>
       <MainNavBar />
       <ClientHolder>
-        <ClientHeader>Cliente</ClientHeader>
+        <Header title="Client" action={() => console.log('Clicou')} />
         {isLoading ? (
           <div
             className="spinner-container"
