@@ -35,16 +35,16 @@ export default createGlobalStyle`
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 15px;
+    width: 12px;
   }
 
   *::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: transparent;
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: #878787;
     border-radius: 15px;
-    border: 4px solid #ffffff;
+    border: 2px solid #fff;
   }
 `;

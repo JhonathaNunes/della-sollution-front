@@ -6,9 +6,9 @@ import { useGlobal } from '../../hooks/useGlobal';
 import {
   LoginContainer,
   FormContainer,
-  StyledInput,
   ButtonContainer,
 } from './style';
+import StyledInput from '../../components/StyledInput/style';
 import Button from '../../components/Button';
 import authenticate from '../../services/AuthService';
 import { addData } from '../../services/LocalStorageService';

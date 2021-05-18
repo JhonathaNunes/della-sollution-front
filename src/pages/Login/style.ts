@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -10,8 +9,7 @@ export const LoginContainer = styled.div`
   justify-content: center;
 
   img {
-    width: 150px;
-    height: 150px;
+    width: 200px;
     margin-bottom: 30px;
   }
 `;
@@ -19,10 +17,6 @@ export const LoginContainer = styled.div`
 export const FormContainer = styled.form`
   width: 350px;
   justify-content: space-between;
-`;
-
-export const StyledInput = styled(TextField)`
-  margin-bottom: 30px !important;
 `;
 
 export const ButtonContainer = styled.div`

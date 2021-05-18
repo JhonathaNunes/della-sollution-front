@@ -5,7 +5,7 @@ import { useGlobal } from '../../hooks/useGlobal';
 import {
   NavBar, Logo, NavItems, NavItem, ProfileContainer,
 } from './style';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo_minified.png';
 
 const MainNavBar: React.FC = () => {
   const { user } = useGlobal();
