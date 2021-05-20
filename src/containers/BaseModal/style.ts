@@ -14,7 +14,7 @@ export const ModalHeader = styled.div`
   
   h2 {
     margin: 0;
-    color: #1976d2;
+    color: #4a40bf;
   }
   
   .close-button {

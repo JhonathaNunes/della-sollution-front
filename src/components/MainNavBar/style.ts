@@ -30,7 +30,7 @@ interface NavItemProps {
 }
 
 export const NavItem = styled(Link)<NavItemProps>`
-  color: #1976d2;
+  color: #4a40bf;
   text-decoration: none;
   width: 110px;
   text-align: center;

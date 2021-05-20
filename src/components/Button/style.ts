@@ -10,11 +10,17 @@ const StyledButton = styled.button<ButtonProps>`
   min-width: 110px;
   font-weight: lighter;
   font-size: 14px;
-  color: #ffffff;
-  background-color: ${
-  (props) => (props.color === 'primary' ? '#1976D2' : '#9A0036')
+  color: ${
+  (props) => (props.color === 'primary' ? '#ffffff' : '#4a40bf')
 };
-  border: none;
+  background-color: ${
+  (props) => (props.color === 'primary' ? '#4a40bf' : '#ffffff')
+};
+  ${(props) => (props.color === 'secondary'
+    ? 'border: 1px solid #4a40bf;'
+    : 'border: none;')
+};
+  
   text-transform: uppercase;
   border-radius: 5px;
   cursor: pointer;
