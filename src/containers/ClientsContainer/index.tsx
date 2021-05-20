@@ -6,7 +6,7 @@ import TableActions from '../../components/TableActions';
 
 interface ClientContainerProps {
   clients: Client[];
-  viewClick: () => void;
+  viewClick: (client: Client) => void;
   deleteClick: (id: number) => void;
 }
 
@@ -50,7 +50,7 @@ const ClientsContainer: React.FC<ClientContainerProps> = ({
             <TableCell>{client.phone}</TableCell>
             <TableCell>
               <TableActions
-                viewClick={viewClick}
+                viewClick={() => viewClick(client)}
                 deleteClick={() => deleteClick(client.id || -1)}
               />
             </TableCell>

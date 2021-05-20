@@ -14,6 +14,7 @@ const Clients: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [clientsState, setClients] = useState<Client[]>([]);
   const [modalIsOpen, setModalOpen] = useState(false);
+  const [clientModal, setClientModal] = useState<Client|null>(null);
 
   const listClients = () => {
     getClient()
@@ -46,6 +47,16 @@ const Clients: React.FC = () => {
       });
   };
 
+  const openEditModal = (client: Client) => {
+    setModalOpen(true);
+    setClientModal(client);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setClientModal(null);
+  };
+
   useEffect(() => {
     setLoading(true);
     listClients();
@@ -67,15 +78,16 @@ const Clients: React.FC = () => {
           <ClientBody>
             <ClientsContainer
               clients={clientsState}
-              viewClick={() => console.log('a')}
+              viewClick={openEditModal}
               deleteClick={deleteClients}
             />
           </ClientBody>
         )}
       </ClientHolder>
       <ClientModal
+        client={clientModal}
         successCallback={listClients}
-        handleClose={() => setModalOpen(false)}
+        onClose={closeModal}
         isOpen={modalIsOpen}
       />
     </>
