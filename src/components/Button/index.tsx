@@ -2,11 +2,11 @@ import React, { ButtonHTMLAttributes } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StyledButton from './style';
 
-interface ButtonProps {
+type ButtonProps = {
   text: string;
   isLoading?: boolean;
   color: 'primary' | 'secondary';
-}
+};
 
 type allProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -20,9 +20,7 @@ const Button: React.FC<allProps> = ({
     aria-label={text}
     {...props}
   >
-    { isLoading
-      ? (<CircularProgress color="inherit" size={14} />)
-      : text }
+    {isLoading ? <CircularProgress color="inherit" size={14} /> : text}
   </StyledButton>
 );
 

@@ -17,7 +17,7 @@ const PrivateRoute: React.FC<RouteProps> = (props) => {
     return <Redirect to="/login" />;
   }
 
-  return (isLogged() ? <Route {...props} /> : <Redirect to="/login" />);
+  return isLogged() ? <Route {...props} /> : <Redirect to="/login" />;
 };
 
 export default PrivateRoute;

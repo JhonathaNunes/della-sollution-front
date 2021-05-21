@@ -18,16 +18,15 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-const unauthenticatedUrls = [
-  'login',
-];
+const unauthenticatedUrls = ['login'];
 
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (
       error?.response?.status === 401
-      && !unauthenticatedUrls.includes(error?.response?.config.url)) {
+      && !unauthenticatedUrls.includes(error?.response?.config.url)
+    ) {
       logout();
     }
 

@@ -1,0 +1,11 @@
+import Order from './Order';
+
+export default interface Client {
+  id?: number;
+  fullName: string;
+  email: string;
+  phone?: string;
+  cpf?: string;
+  cnpj?: string;
+  orders?: Order[];
+}
