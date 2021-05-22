@@ -36,6 +36,7 @@ const ClientModal: React.FC<ClientModalProps> = ({
     formState: { errors },
     reset,
     unregister,
+    setValue,
   } = useForm<ClientForm>();
   const [fullName, setFullname] = useState<string|undefined>('');
   const [email, setEmail] = useState<string|undefined>('');
@@ -44,8 +45,14 @@ const ClientModal: React.FC<ClientModalProps> = ({
   const [cnpj, setCNPJ] = useState<string|undefined>('');
 
   useEffect(() => {
-    if (client?.fullName) setFullname(client.fullName);
-    if (client?.email) setEmail(client.email);
+    if (client?.fullName) {
+      setFullname(client.fullName);
+      setValue('fullName', client.fullName);
+    }
+    if (client?.email) {
+      setEmail(client.email);
+      setValue('email', client.email);
+    }
     if (client?.cnpj) setCNPJ(client.cnpj);
     if (client?.cpf) setCPF(client.cpf);
     if (client?.phone) setPhone(client.phone);
@@ -136,6 +143,10 @@ const ClientModal: React.FC<ClientModalProps> = ({
           helperText={errors.email && errors.email?.message}
           {...register('email', {
             required: 'Campo obrigatório',
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Este não é um formato de e-mail válido',
+            },
           })}
           onChange={(e) => {
             register('email').onChange(e);
@@ -180,7 +191,10 @@ const ClientModal: React.FC<ClientModalProps> = ({
               error={errors.cpf !== undefined}
               helperText={errors.cpf && errors.cpf?.message}
               {...register('cpf', {
-                pattern: /(^(\d{3}\x2E){2}\d{3}\x2D\d{2})/,
+                pattern: {
+                  value: /(^(\d{3}\x2E){2}\d{3}\x2D\d{2})/,
+                  message: 'Este não é um formato de CPF válido',
+                },
               })}
               onChange={undefined}
             />
@@ -202,7 +216,12 @@ const ClientModal: React.FC<ClientModalProps> = ({
               fullWidth
               error={errors.cnpj !== undefined}
               helperText={errors.cnpj && errors.cnpj?.message}
-              name={register('cnpj', {}).name}
+              name={register('cnpj', {
+                pattern: {
+                  value: /(^(\d{2}\x2E)\d{3}\x2E\d{3}\/\d{4}-\d{2})/,
+                  message: 'Este não é um formato de CNPJ válido',
+                },
+              }).name}
             />
           )}
         </InputMask>
