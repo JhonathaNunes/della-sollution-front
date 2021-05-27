@@ -1,5 +1,3 @@
-import Order from './Order';
-
 export default interface Client {
   id?: number;
   fullName: string;
@@ -7,5 +5,4 @@ export default interface Client {
   phone?: string;
   cpf?: string;
   cnpj?: string;
-  orders?: Order[];
 }

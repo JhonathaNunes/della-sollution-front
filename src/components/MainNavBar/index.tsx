@@ -14,8 +14,9 @@ const MainNavBar: React.FC = () => {
     <NavBar>
       <Logo src={logo} alt="Logo" />
       <NavItems>
-        <NavItem to="/">Ordens</NavItem>
+        <NavItem to="/">Pedidos</NavItem>
         <NavItem to="/clientes">Clientes</NavItem>
+        <NavItem to="/servicos">Serviços</NavItem>
       </NavItems>
       <ProfileContainer>
         <span className="user-label">{user?.fullName.split(' ', 1)[0]}</span>

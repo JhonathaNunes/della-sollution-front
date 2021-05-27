@@ -5,7 +5,7 @@ const Home: React.FC = () => (
   <>
     <MainNavBar />
     <div className="spinner-container" style={{ height: 'calc(100vh - 75px)' }}>
-      Orders
+      Pedidos
     </div>
   </>
 );

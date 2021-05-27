@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import { isLogged } from './services/Auth';
 import Home from './pages/Home';
 import Clients from './pages/Clients';
+import Services from './pages/Services';
 
 const Router = () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ const Router = () => (
       />
       <PrivateRoute exact path="/" component={Home} />
       <PrivateRoute exact path="/clientes" component={Clients} />
+      <PrivateRoute exact path="/servicos" component={Services} />
       <Route render={() => <div>Not found</div>} />
     </Switch>
   </BrowserRouter>

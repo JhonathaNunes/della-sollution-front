@@ -4,9 +4,8 @@ import { toast } from 'react-toastify';
 import { deleteClient, getClient } from '../../services/ClientService';
 import MainNavBar from '../../components/MainNavBar';
 import Client from '../../contracts/models/Client';
-import Order from '../../contracts/models/Order';
 import ClientsContainer from '../../containers/ClientsContainer';
-import { ClientHolder, ClientBody } from './style';
+import { PageContainer, PageBody } from '../../containers/PageContainer/styled';
 import Header from '../../components/Header';
 import ClientModal from '../../containers/ClientModal';
 
@@ -20,13 +19,7 @@ const Clients: React.FC = () => {
     getClient()
       .then((response) => {
         const clients = response.data.map((data: any) => {
-          const orders = data.orders.map((o: any) => {
-            const order: Order = { ...o };
-
-            return order;
-          });
-
-          const client: Client = { fullName: data.full_name, orders, ...data };
+          const client: Client = { fullName: data.full_name, ...data };
 
           return client;
         });
@@ -65,7 +58,7 @@ const Clients: React.FC = () => {
   return (
     <>
       <MainNavBar />
-      <ClientHolder>
+      <PageContainer>
         <Header title="Cliente" action={() => setModalOpen(true)} />
         {isLoading ? (
           <div
@@ -75,15 +68,15 @@ const Clients: React.FC = () => {
             <CircularProgress />
           </div>
         ) : (
-          <ClientBody>
+          <PageBody>
             <ClientsContainer
               clients={clientsState}
               viewClick={openEditModal}
               deleteClick={deleteClients}
             />
-          </ClientBody>
+          </PageBody>
         )}
-      </ClientHolder>
+      </PageContainer>
       <ClientModal
         client={clientModal}
         successCallback={listClients}
