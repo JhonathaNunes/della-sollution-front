@@ -37,7 +37,12 @@ const ClientModal: React.FC<ClientModalProps> = ({
     reset,
     unregister,
     setValue,
-  } = useForm<ClientForm>();
+  } = useForm<ClientForm>({
+    defaultValues: {
+      fullName: client?.fullName,
+      email: client?.email,
+    },
+  });
   const [fullName, setFullname] = useState<string|undefined>('');
   const [email, setEmail] = useState<string|undefined>('');
   const [phone, setPhone] = useState<string|undefined>('');
@@ -45,17 +50,18 @@ const ClientModal: React.FC<ClientModalProps> = ({
   const [cnpj, setCNPJ] = useState<string|undefined>('');
 
   useEffect(() => {
-    if (client?.fullName) {
-      setFullname(client.fullName);
-      setValue('fullName', client.fullName);
+    if (isOpen) {
+      setFullname(client?.fullName);
+      setEmail(client?.email);
+      if (client) {
+        setValue('fullName', client.fullName);
+        setValue('email', client.email);
+        setValue('phone', client.phone);
+      }
+      setCNPJ(client?.cnpj);
+      setCPF(client?.cpf);
+      setPhone(client?.phone);
     }
-    if (client?.email) {
-      setEmail(client.email);
-      setValue('email', client.email);
-    }
-    if (client?.cnpj) setCNPJ(client.cnpj);
-    if (client?.cpf) setCPF(client.cpf);
-    if (client?.phone) setPhone(client.phone);
   }, [isOpen]);
 
   const title = client !== null ? 'Editar cliente' : 'Novo cliente';
@@ -66,6 +72,9 @@ const ClientModal: React.FC<ClientModalProps> = ({
     setPhone('');
     setCPF('');
     setCNPJ('');
+    setValue('fullName', '');
+    setValue('email', '');
+    setValue('phone', '');
   };
 
   const handleClose = () => {
@@ -130,6 +139,7 @@ const ClientModal: React.FC<ClientModalProps> = ({
           })}
           onChange={(e) => {
             register('fullName').onChange(e);
+            setValue('fullName', e.target.value);
             setFullname(e.target.value);
           }}
         />
@@ -151,6 +161,7 @@ const ClientModal: React.FC<ClientModalProps> = ({
           onChange={(e) => {
             register('email').onChange(e);
             setEmail(e.target.value);
+            setValue('email', e.target.value);
           }}
         />
         <InputMask
@@ -169,7 +180,9 @@ const ClientModal: React.FC<ClientModalProps> = ({
               fullWidth
               error={errors.phone !== undefined}
               helperText={errors.phone && errors.phone?.message}
-              {...register('phone')}
+              {...register('phone', {
+                required: 'Campo obrigatório',
+              })}
               onChange={undefined}
             />
           )}
