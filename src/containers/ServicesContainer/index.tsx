@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core';
 import Service from '../../contracts/models/Service';
 import ContentTable, { ColumnsInterface } from '../../components/ContentTable';
 import TableActions from '../../components/TableActions';
-import currencyFormatter from '../../Utils/NumberFormatter';
+import currencyFormatter from '../../utils/NumberFormatter';
 
 interface ServiceContainerProps {
   services: Service[];

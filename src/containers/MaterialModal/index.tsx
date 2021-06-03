@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import Service from '../../contracts/models/Service';
 import BaseModal from '../BaseModal';
-import { ServiceFormStyled, ButtonsContainer } from './styled';
+import Material from '../../contracts/models/Material';
+import { MaterialFormStyled, ButtonsContainer } from './styled';
 import StyledInput from '../../components/StyledInput/style';
 import Button from '../../components/Button';
-import { createService, updateService } from '../../services/ServiceService';
+import { createMaterial, updateMaterial } from '../../services/MaterialService';
 
 interface ServiceModalProps {
   onClose: () => void;
   successCallback: () => void;
   isOpen: boolean;
-  service?: Service;
+  material?: Material;
 }
 
-interface ServiceForm {
+interface MaterialForm {
   name: string;
   description: string;
-  valueHour: number;
+  storage?: number;
+  uniqueValue: number;
+  newItems?: number;
 }
 
-const ServiceModal: React.FC<ServiceModalProps> = ({
+const MaterialModal: React.FC<ServiceModalProps> = ({
   onClose,
   successCallback,
   isOpen,
-  service,
+  material,
 }) => {
   const {
     register,
@@ -34,27 +36,33 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
     reset,
     unregister,
     setValue,
-  } = useForm<ServiceForm>();
+  } = useForm<MaterialForm>();
 
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [valueHour, setValueState] = useState<number>();
+  const [storage, setStorage] = useState<number>();
+  const [newItems, setNewItems] = useState<number>();
+  const [uniqueValue, setUniqueValue] = useState<number>();
 
   useEffect(() => {
-    if (isOpen && service) {
-      setName(service.name);
-      setDescription(service.description);
-      setValueState(service.valueHour);
-      setValue('name', service.name);
-      setValue('description', service.description);
-      setValue('valueHour', service.valueHour);
+    if (isOpen && material) {
+      setName(material.name);
+      setDescription(material.description);
+      setStorage(material.storage);
+      setNewItems(0);
+      setUniqueValue(material.uniqueValue);
+      setValue('name', material.name);
+      setValue('description', material.description);
+      setValue('storage', material.storage);
     }
   }, [isOpen]);
 
   const cleanState = () => {
     setName('');
     setDescription('');
-    setValueState(undefined);
+    setStorage(undefined);
+    setUniqueValue(undefined);
+    setNewItems(undefined);
     setValue('name', '');
     setValue('description', '');
   };
@@ -66,17 +74,16 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
     onClose();
   };
 
-  const onSubmit = (form: ServiceForm) => {
-    const serviceToSend: Service = {
-      id: service?.id,
+  const onSubmit = (form: MaterialForm) => {
+    const materialToSend: Material = {
+      id: material?.id,
       ...form,
-      valueHour: +form.valueHour,
+      uniqueValue: +form.uniqueValue,
     };
 
-    if (service) {
-      updateService(serviceToSend).then(() => {
+    if (material) {
+      updateMaterial(materialToSend).then(() => {
         successCallback();
-        handleClose();
       }).catch((err) => {
         switch (err.response.status) {
           case 422:
@@ -86,11 +93,12 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
             toast.error('Houve um erro ao tentar fazer a requisição.'
               + 'Tente novamente mais tarde');
         }
+      }).finally(() => {
+        handleClose();
       });
     } else {
-      createService(serviceToSend).then(() => {
+      createMaterial(materialToSend).then(() => {
         successCallback();
-        handleClose();
       }).catch((err) => {
         switch (err.response.status) {
           case 422:
@@ -100,15 +108,18 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
             toast.error('Houve um erro ao tentar fazer a requisição.'
               + 'Tente novamente mais tarde');
         }
-      });
+      })
+        .finally(() => handleClose());
     }
   };
 
-  const title = service !== null ? 'Editar serviço' : 'Cadastrar serviço';
+  const title = material ? 'Editar material' : 'Cadastrar material';
+  const storageOptions = material ? { required: false }
+    : { required: 'Campo obrigatírio' };
 
   return (
     <BaseModal title={title} handleClose={handleClose} isOpen={isOpen}>
-      <ServiceFormStyled onSubmit={handleSubmit(onSubmit)}>
+      <MaterialFormStyled onSubmit={handleSubmit(onSubmit)}>
         <StyledInput
           label="Nome"
           variant="outlined"
@@ -126,23 +137,61 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           }}
         />
         <StyledInput
-          label="Valor hora"
+          label="Valor unitário"
           variant="outlined"
           fullWidth
-          value={valueHour}
+          value={uniqueValue}
           type="number"
           inputProps={{ step: 0.01, max: 999.99 }}
-          error={errors.valueHour !== undefined}
-          helperText={errors.valueHour && errors.valueHour.message}
-          {...register('valueHour', {
+          error={errors.uniqueValue !== undefined}
+          helperText={errors.uniqueValue && errors.uniqueValue.message}
+          {...register('uniqueValue', {
             required: 'Campo obrigatório',
           })}
           onChange={(e) => {
-            register('valueHour').onChange(e);
-            setValueState(+e.target.value);
-            setValue('valueHour', +e.target.value);
+            register('uniqueValue').onChange(e);
+            setUniqueValue(+e.target.value);
+            setValue('uniqueValue', +e.target.value);
           }}
         />
+        { !material
+          ? (
+            <StyledInput
+              label="Estoque"
+              variant="outlined"
+              fullWidth
+              value={storage}
+              type="number"
+              inputProps={{ step: 1, max: 10000 }}
+              error={errors.storage !== undefined}
+              helperText={errors.storage && errors.storage.message}
+              {...register('storage', storageOptions)}
+              onChange={(e) => {
+                register('storage').onChange(e);
+                setStorage(+e.target.value);
+                setValue('storage', +e.target.value);
+              }}
+            />
+          )
+          : (
+            <StyledInput
+              label="Itens para adicionar"
+              variant="outlined"
+              fullWidth
+              value={newItems}
+              type="number"
+              inputProps={{ step: 1, max: 10000 }}
+              error={errors.newItems !== undefined}
+              helperText={errors.newItems && errors.newItems.message}
+              {...register('newItems')}
+              onChange={(e) => {
+                register('newItems').onChange(e);
+                setNewItems(+e.target.value);
+                setValue('newItems', +e.target.value);
+              }}
+            />
+          )}
+
         <StyledInput
           label="Description"
           variant="outlined"
@@ -171,9 +220,9 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           />
           <Button text="Salvar" color="primary" type="submit" />
         </ButtonsContainer>
-      </ServiceFormStyled>
+      </MaterialFormStyled>
     </BaseModal>
   );
 };
 
-export default ServiceModal;
+export default MaterialModal;
