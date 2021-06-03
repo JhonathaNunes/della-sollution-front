@@ -5,7 +5,7 @@ import {
 import Login from './pages/Login';
 import PrivateRoute from './PrivateRoute';
 import { isLogged } from './services/Auth';
-import Home from './pages/Home';
+import Home from './pages/HomeOrders';
 import Clients from './pages/Clients';
 import Services from './pages/Services';
 
