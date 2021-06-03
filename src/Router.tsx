@@ -8,6 +8,7 @@ import { isLogged } from './services/Auth';
 import Home from './pages/HomeOrders';
 import Clients from './pages/Clients';
 import Services from './pages/Services';
+import Materials from './pages/Materials';
 
 const Router = () => (
   <BrowserRouter>
@@ -20,6 +21,7 @@ const Router = () => (
       <PrivateRoute exact path="/" component={Home} />
       <PrivateRoute exact path="/clientes" component={Clients} />
       <PrivateRoute exact path="/servicos" component={Services} />
+      <PrivateRoute exact path="/materiais" component={Materials} />
       <Route render={() => <div>Not found</div>} />
     </Switch>
   </BrowserRouter>
