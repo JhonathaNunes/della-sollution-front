@@ -27,7 +27,7 @@ const Services = () => {
         setServices(services);
       })
       .catch(() => {
-        toast.error('Houve um error ao carregar os serviços');
+        toast.error('Houve um erro ao carregar os serviços');
       })
       .finally(() => setLoading(false));
   };
