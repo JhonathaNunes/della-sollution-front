@@ -58,7 +58,7 @@ const Materials: React.FC = () => {
     <>
       <MainNavBar />
       <PageContainer>
-        <Header title="Materials" action={() => setModalOpen(true)} />
+        <Header title="Materiais" action={() => setModalOpen(true)} />
         {isLoading ? (
           <div
             className="spinner-container"

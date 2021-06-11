@@ -14,7 +14,7 @@ const MainNavBar: React.FC = () => {
     <NavBar>
       <Logo src={logo} alt="Logo" />
       <NavItems>
-        <NavItem to="/">Pedidos</NavItem>
+        <NavItem to="/">Ordens</NavItem>
         <NavItem to="/clientes">Clientes</NavItem>
         <NavItem to="/servicos">Serviços</NavItem>
         <NavItem to="/materiais">Materiais</NavItem>

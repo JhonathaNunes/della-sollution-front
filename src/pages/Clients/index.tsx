@@ -59,7 +59,7 @@ const Clients: React.FC = () => {
     <>
       <MainNavBar />
       <PageContainer>
-        <Header title="Cliente" action={() => setModalOpen(true)} />
+        <Header title="Clientes" action={() => setModalOpen(true)} />
         {isLoading ? (
           <div
             className="spinner-container"

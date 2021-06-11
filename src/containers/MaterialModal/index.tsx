@@ -49,7 +49,7 @@ const MaterialModal: React.FC<ServiceModalProps> = ({
       setName(material.name);
       setDescription(material.description);
       setStorage(material.storage);
-      setNewItems(0);
+      setNewItems(undefined);
       setUniqueValue(material.uniqueValue);
       setValue('name', material.name);
       setValue('description', material.description);
