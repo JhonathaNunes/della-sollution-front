@@ -7,13 +7,16 @@ import Header from '../../components/Header';
 import Order from '../../contracts/models/Order';
 import { deleteOrder, getOrder } from '../../services/OrdersService';
 import OrdersContainer from '../../containers/OrdersContainer';
+import OrderModal from '../../containers/OrderModal';
+import OrderEditModal from '../../containers/OrderEditModal';
 // import OrderModal from '../../containers/OrderModal';
 
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
   const [ordersState, setOrders] = useState<Order[]>([]);
-  // const [modalIsOpen, setModalOpen] = useState(false);
-  // const [orderModal, setOrderModal] = useState<Order>();
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [editModalIsOpen, setEditModalOpen] = useState(false);
+  const [orderModal, setOrderModal] = useState<Order>();
 
   const listOrders = () => {
     setLoading(true);
@@ -63,7 +66,7 @@ const Home = () => {
     <>
       <MainNavBar />
       <PageContainer>
-        <Header title="Ordens de serviço" action={() => console.log()} />
+        <Header title="Ordens de serviço" action={() => setModalOpen(true)} />
         {isLoading ? (
           <div
             className="spinner-container"
@@ -75,18 +78,26 @@ const Home = () => {
           <PageBody>
             <OrdersContainer
               orders={ordersState}
-              viewClick={() => console.log()}
+              viewClick={(o) => {
+                setEditModalOpen(true);
+                setOrderModal(o);
+              }}
               deleteClick={delOrder}
             />
           </PageBody>
         )}
       </PageContainer>
-      {/* <OrderModal */}
-      {/*  order={orderModal} */}
-      {/*  onClose={closeModal} */}
-      {/*  successCallback={listOrders} */}
-      {/*  isOpen={modalIsOpen} */}
-      {/* /> */}
+      <OrderModal
+        onClose={() => setModalOpen(false)}
+        successCallback={listOrders}
+        isOpen={modalIsOpen}
+      />
+      <OrderEditModal
+        onClose={() => setEditModalOpen(false)}
+        successCallback={listOrders}
+        isOpen={editModalIsOpen}
+        order={orderModal}
+      />
     </>
   );
 };

@@ -144,7 +144,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           }}
         />
         <StyledInput
-          label="Description"
+          label="Descrição"
           variant="outlined"
           fullWidth
           value={description}
