@@ -99,6 +99,7 @@ const MaterialModal: React.FC<ServiceModalProps> = ({
     } else {
       createMaterial(materialToSend).then(() => {
         successCallback();
+        handleClose();
       }).catch((err) => {
         switch (err.response.status) {
           case 422:
@@ -108,8 +109,7 @@ const MaterialModal: React.FC<ServiceModalProps> = ({
             toast.error('Houve um erro ao tentar fazer a requisição.'
               + 'Tente novamente mais tarde');
         }
-      })
-        .finally(() => handleClose());
+      });
     }
   };
 
