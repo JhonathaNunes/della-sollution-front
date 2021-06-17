@@ -170,6 +170,7 @@ const ClientModal: React.FC<ClientModalProps> = ({
           onChange={(e) => {
             register('phone').onChange(e);
             setPhone(e.target.value);
+            setValue('phone', e.target.value);
           }}
           onBlur={register('phone').onBlur}
         >
