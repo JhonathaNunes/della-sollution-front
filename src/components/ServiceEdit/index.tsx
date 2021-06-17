@@ -131,7 +131,6 @@ const ServiceEdit: React.FC<ServiceEditProps> = ({ service, finished }) => {
               value={field.materialId}
               type="number"
               disabled={field.added}
-              inputProps={{ min: 1 }}
               onChange={(e) => {
                 handleMaterialSelectedChange(index, e.target.value as number);
               }}
@@ -146,7 +145,7 @@ const ServiceEdit: React.FC<ServiceEditProps> = ({ service, finished }) => {
             variant="outlined"
             style={{ width: '20%' }}
             type="number"
-            inputProps={{ min: 0 }}
+            inputProps={{ min: 1 }}
             value={field.materialQtd}
             disabled={field.added}
             onChange={(e) => {
