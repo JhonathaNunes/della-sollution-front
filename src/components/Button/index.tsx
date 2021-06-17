@@ -6,17 +6,19 @@ type ButtonProps = {
   text: string;
   isLoading?: boolean;
   color: 'primary' | 'secondary';
+  onlyText?: boolean;
 };
 
 type allProps = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: React.FC<allProps> = ({
-  color, text, isLoading, ...props
+  color, text, isLoading, onlyText, ...props
 }) => (
   <StyledButton
     color={color}
     disabled={isLoading}
     isLoading={isLoading}
+    onlyText={onlyText}
     aria-label={text}
     {...props}
   >

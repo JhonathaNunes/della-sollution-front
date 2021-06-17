@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import BaseModal from '../BaseModal';
 import Order from '../../contracts/models/Order';
 import ServiceEdit from '../../components/ServiceEdit';
+import OrderStyled from './style';
 
 interface OrderEditModalProps {
   onClose: () => void;
@@ -13,7 +14,6 @@ interface OrderEditModalProps {
 
 const OrderEditModal: React.FC<OrderEditModalProps> = ({
   onClose,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   successCallback,
   isOpen,
   order,
@@ -23,13 +23,17 @@ const OrderEditModal: React.FC<OrderEditModalProps> = ({
   return (
     <BaseModal
       title="Visualizar ordem de serviço"
-      handleClose={onClose}
+      handleClose={() => {
+        onClose();
+        successCallback();
+      }}
       isOpen={isOpen}
     >
-      {order?.services.map((service) => (
-        <ServiceEdit service={service} />
-      ))}
-      {order?.client.email}
+      <OrderStyled>
+        {order?.services.map((service) => (
+          <ServiceEdit service={service} />
+        ))}
+      </OrderStyled>
     </BaseModal>
   );
 };

@@ -5,4 +5,5 @@ export default interface Material {
   storage?: number;
   uniqueValue: number;
   newItems?: number;
+  qtd?: number;
 }

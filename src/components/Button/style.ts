@@ -3,6 +3,7 @@ import styled from 'styled-components';
 interface ButtonProps {
   color: 'primary' | 'secondary';
   isLoading?: boolean;
+  onlyText?: boolean;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -16,7 +17,7 @@ const StyledButton = styled.button<ButtonProps>`
   background-color: ${
   (props) => (props.color === 'primary' ? '#4a40bf' : '#ffffff')
 };
-  ${(props) => (props.color === 'secondary'
+  ${(props) => (props.color === 'secondary' && !props.onlyText
     ? 'border: 1px solid #4a40bf;'
     : 'border: none;')
 };

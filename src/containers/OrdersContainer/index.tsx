@@ -29,9 +29,9 @@ const OrdersContainer: React.FC<OrderContainerProps> = ({
       align: 'left',
     },
     {
-      id: 'email',
-      label: 'E-mail',
-      minWidth: 170,
+      id: 'status',
+      label: 'Status',
+      minWidth: 35,
       align: 'left',
     },
     {
@@ -49,7 +49,7 @@ const OrdersContainer: React.FC<OrderContainerProps> = ({
           <TableRow hover key={order.id}>
             <TableCell>{order.id}</TableCell>
             <TableCell>{order.client.fullName}</TableCell>
-            <TableCell>{order.client.email}</TableCell>
+            <TableCell>{order.status}</TableCell>
             <TableCell>
               <TableActions
                 viewClick={() => viewClick(order)}
