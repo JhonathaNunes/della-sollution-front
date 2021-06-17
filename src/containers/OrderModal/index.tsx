@@ -91,7 +91,11 @@ const OrderModal: React.FC<OrderModalProps> = ({
 
   return (
     <BaseModal title="Nova ordem" handleClose={onClose} isOpen={isOpen}>
-      <OrderFormStyled onSubmit={handleSubmit}>
+      <OrderFormStyled onSubmit={(event) => {
+        event.preventDefault();
+        handleSubmit();
+      }}
+      >
         <StyledFormControl variant="outlined">
           <InputLabel id="clientLabel">Cliente</InputLabel>
           <StyledSelect

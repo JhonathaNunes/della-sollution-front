@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@material-ui/core';
@@ -9,7 +11,6 @@ import { deleteOrder, getOrder } from '../../services/OrdersService';
 import OrdersContainer from '../../containers/OrdersContainer';
 import OrderModal from '../../containers/OrderModal';
 import OrderEditModal from '../../containers/OrderEditModal';
-// import OrderModal from '../../containers/OrderModal';
 
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
@@ -24,7 +25,6 @@ const Home = () => {
     getOrder()
       .then((response) => {
         const orders = response.data.map((data: any) => {
-          // eslint-disable-next-line no-param-reassign
           data.client.fullName = data.client.full_name;
           return {
             ...data,
