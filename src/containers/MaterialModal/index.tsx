@@ -142,7 +142,7 @@ const MaterialModal: React.FC<ServiceModalProps> = ({
           fullWidth
           value={uniqueValue}
           type="number"
-          inputProps={{ step: 0.01, max: 999.99 }}
+          inputProps={{ step: 0.01, min: 0, max: 999.99 }}
           error={errors.uniqueValue !== undefined}
           helperText={errors.uniqueValue && errors.uniqueValue.message}
           {...register('uniqueValue', {
@@ -162,7 +162,7 @@ const MaterialModal: React.FC<ServiceModalProps> = ({
               fullWidth
               value={storage}
               type="number"
-              inputProps={{ step: 1, max: 10000 }}
+              inputProps={{ step: 1, min: 0, max: 10000 }}
               error={errors.storage !== undefined}
               helperText={errors.storage && errors.storage.message}
               {...register('storage', storageOptions)}
@@ -180,7 +180,7 @@ const MaterialModal: React.FC<ServiceModalProps> = ({
               fullWidth
               value={newItems}
               type="number"
-              inputProps={{ step: 1, max: 10000 }}
+              inputProps={{ step: 1, min: 0, max: 10000 }}
               error={errors.newItems !== undefined}
               helperText={errors.newItems && errors.newItems.message}
               {...register('newItems')}

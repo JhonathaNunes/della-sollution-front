@@ -131,7 +131,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           fullWidth
           value={valueHour}
           type="number"
-          inputProps={{ step: 0.01, max: 999.99 }}
+          inputProps={{ step: 0.01, min: 0, max: 999.99 }}
           error={errors.valueHour !== undefined}
           helperText={errors.valueHour && errors.valueHour.message}
           {...register('valueHour', {

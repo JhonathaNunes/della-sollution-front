@@ -27,6 +27,13 @@ const OrderEditModal: React.FC<OrderEditModalProps> = ({
   };
 
   const endOrder = () => {
+    if (order?.services !== undefined
+      && order?.services.filter((service) => (
+        service.hoursWorked && service.hoursWorked > 0
+      )).length < order.services.length) {
+      toast.error('Todos serviços precisam de horas trabalhadas');
+      return;
+    }
     finishOrder(order?.id ?? -1)
       .then(() => handleClose())
       .catch(() => {
