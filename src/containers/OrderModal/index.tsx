@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import { toast } from 'react-toastify';
 import { InputLabel, MenuItem } from '@material-ui/core';
 import { toast } from 'react-toastify';
+import InputMask from 'react-input-mask';
 import BaseModal from '../BaseModal';
+import { createOrder } from '../../services/OrdersService';
 import { OrderFormStyled, ButtonsContainer } from './style';
 import Button from '../../components/Button';
 import StyledInput from '../../components/StyledInput/style';
@@ -12,7 +13,6 @@ import Client from '../../contracts/models/Client';
 import { getService } from '../../services/ServiceService';
 import
 StyledSelect, { StyledFormControl } from '../../components/StyledSelect/style';
-import { createOrder } from '../../services/OrdersService';
 
 interface OrderModalProps {
   onClose: () => void;
@@ -59,7 +59,30 @@ const OrderModal: React.FC<OrderModalProps> = ({
       });
   };
 
+  const cleanState = () => {
+    setSelectedClient(undefined);
+    setSelectedServices([]);
+    setDescription(undefined);
+    setStreet(undefined);
+    setCep(undefined);
+    setNumber(undefined);
+    setCity(undefined);
+  };
+
   const handleSubmit = () => {
+    if (
+      !description
+      || !selectedClient
+      || selectedServices.length === 0
+      || !street
+      || !cep
+      || cep.length < 8
+      || !number
+      || !city
+    ) {
+      toast.error('Um ou mais campos estão incorretos');
+      return;
+    }
     const params = {
       description,
       client_id: selectedClient,
@@ -88,6 +111,10 @@ const OrderModal: React.FC<OrderModalProps> = ({
     listClient();
     listService();
   }, []);
+
+  useEffect(() => {
+    cleanState();
+  }, [isOpen]);
 
   return (
     <BaseModal title="Nova ordem" handleClose={onClose} isOpen={isOpen}>
@@ -129,15 +156,38 @@ const OrderModal: React.FC<OrderModalProps> = ({
             setNumber(e.target.value);
           }}
         />
-        <StyledInput
-          label="CEP"
-          variant="outlined"
+        <InputMask
+          mask="99999-999"
           value={cep}
-          fullWidth
           onChange={(e) => {
-            setCep(e.target.value);
+            setCep(e.target.value.replace(/[^\w\s]/gi, ''));
           }}
-        />
+        >
+          {() => (
+            <StyledInput
+              label="CEP"
+              variant="outlined"
+              fullWidth
+
+            />
+          )}
+        </InputMask>
+        <InputMask
+          mask="99999"
+          value={cep}
+          onChange={(e) => {
+            setCep(e.target.value.replace(/[^\w\s]/gi, ''));
+          }}
+        >
+          {() => (
+            <StyledInput
+              label="CEP"
+              variant="outlined"
+              fullWidth
+
+            />
+          )}
+        </InputMask>
         <StyledInput
           label="Cidade"
           variant="outlined"
