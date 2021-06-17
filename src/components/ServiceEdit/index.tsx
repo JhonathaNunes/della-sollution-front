@@ -13,6 +13,7 @@ import { addMaterials } from '../../services/OrdersService';
 
 interface ServiceEditProps {
   service: Service;
+  finished: boolean;
 }
 
 interface MaterialField {
@@ -21,7 +22,7 @@ interface MaterialField {
   added?: boolean;
 }
 
-const ServiceEdit: React.FC<ServiceEditProps> = ({ service }) => {
+const ServiceEdit: React.FC<ServiceEditProps> = ({ service, finished }) => {
   const [materials, setMaterials] = useState<Material[]>();
   const [hoursWorked, setHoursWorked] = useState<number>();
   const [materialFields, setMaterialFields] = useState<MaterialField[]>([]);
@@ -107,6 +108,7 @@ const ServiceEdit: React.FC<ServiceEditProps> = ({ service }) => {
           type="number"
           inputProps={{ min: 0 }}
           value={hoursWorked}
+          disabled={finished}
           onChange={(e) => {
             setHoursWorked(+e.target.value);
           }}
@@ -146,15 +148,22 @@ const ServiceEdit: React.FC<ServiceEditProps> = ({ service }) => {
           />
         </MaterialRow>
       ))}
-      <ButtonContainer>
-        <Button
-          text="Adicionar material"
-          color="secondary"
-          onlyText
-          onClick={() => addField()}
-        />
-        <Button text="Salvar" color="primary" onClick={() => addMaterial()} />
-      </ButtonContainer>
+      {!finished
+        && (
+          <ButtonContainer>
+            <Button
+              text="Adicionar material"
+              color="secondary"
+              onlyText
+              onClick={() => addField()}
+            />
+            <Button
+              text="Salvar"
+              color="primary"
+              onClick={() => addMaterial()}
+            />
+          </ButtonContainer>
+        )}
     </EditService>
   );
 };

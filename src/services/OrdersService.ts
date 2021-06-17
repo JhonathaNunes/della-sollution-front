@@ -21,3 +21,5 @@ export const updateOrder = (order: Order) => {
 export const addMaterials = (id:number, os: Object) => (
   api.put(`orderservices/${id}`, os)
 );
+
+export const finishOrder = (id:number) => api.put(`orders/finalizar/${id}`);
