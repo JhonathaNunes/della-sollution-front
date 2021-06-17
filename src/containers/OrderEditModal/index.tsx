@@ -69,49 +69,63 @@ const OrderEditModal: React.FC<OrderEditModalProps> = ({
       isOpen={isOpen}
     >
       <OrderStyled>
+        <p>
+          {order?.client.fullName}
+        </p>
+        <p>
+          {order?.client.email}
+        </p>
+        <p>
+          {order?.client.phone}
+        </p>
+        <p>
+          {`${order?.address.street}, 
+          ${order?.address.number}. CEP: ${order?.address.cep} - 
+          ${order?.address.city}`}
+        </p>
         {order?.services.map((service) => (
           <ServiceEdit
             service={service}
             finished={order?.status === 'Finalizado'}
           />
         ))}
-      </OrderStyled>
-      {order?.status !== 'Finalizado'
-        ? (
-          <ButtonsContainer>
-            <Button
-              text="Fechar"
-              color="secondary"
-              onClick={handleClose}
-              type="button"
-            />
-            <Button
-              text="Finalizar"
-              color="primary"
-              onClick={() => endOrder()}
-            />
-          </ButtonsContainer>
-        ) : (
-          <div>
-            <p>
-              Total serviço:
-              {' '}
-              {currencyFormatter(totalServices())}
-            </p>
-            <p>
-              Total materiais:
-              {' '}
-              {currencyFormatter(totalMaterials())}
-            </p>
-            <p>
-              <b>
-                Total:
+        {order?.status !== 'Finalizado'
+          ? (
+            <ButtonsContainer>
+              <Button
+                text="Fechar"
+                color="secondary"
+                onClick={handleClose}
+                type="button"
+              />
+              <Button
+                text="Finalizar"
+                color="primary"
+                onClick={() => endOrder()}
+              />
+            </ButtonsContainer>
+          ) : (
+            <div>
+              <p>
+                Total serviço:
                 {' '}
-                {currencyFormatter(totalMaterials() + totalServices())}
-              </b>
-            </p>
-          </div>
-        )}
+                {currencyFormatter(totalServices())}
+              </p>
+              <p>
+                Total materiais:
+                {' '}
+                {currencyFormatter(totalMaterials())}
+              </p>
+              <p>
+                <b>
+                  Total:
+                  {' '}
+                  {currencyFormatter(totalMaterials() + totalServices())}
+                </b>
+              </p>
+            </div>
+          )}
+      </OrderStyled>
     </BaseModal>
   );
 };
